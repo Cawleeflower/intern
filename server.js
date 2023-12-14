@@ -161,7 +161,8 @@ app.get('/files/checkNameUnique/:name', async (req, res) => {
   }
 });
 
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, function() {
+  console.log(`Listening on port ${PORT}`);
 });
