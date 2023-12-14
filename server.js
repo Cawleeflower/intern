@@ -9,9 +9,13 @@ app.use(cors());
 app.use(cors({
   origin: 'http://localhost:8080'
 }));
+
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://admin:Escel41066^@cluster0.khrogap.mongodb.net/?retryWrites=true&w=majority";
+
 // Replace with your MongoDB connection string
 const mongoDB = 'mongodb://localhost:27017';
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
