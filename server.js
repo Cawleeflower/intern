@@ -7,7 +7,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.use(cors({
-  origin: 'http://localhost:8080'
+  origin: 'https://intern-web-b420a534061a.herokuapp.com/'
 }));
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
