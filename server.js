@@ -22,6 +22,12 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(express.json());
 
+// Middleware for setting Content Security Policy
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "default-src 'self'; font-src 'self' data:; ...other-directives...");
+  next();
+});
+
 // Schema for storing name and age
 const personSchema = new mongoose.Schema({
   name: String,
