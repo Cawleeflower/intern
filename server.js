@@ -161,6 +161,36 @@ app.get('/files/checkNameUnique/:name', async (req, res) => {
   }
 });
 
+app.get('/files/download/:fileId', (req, res) => {
+  // Retrieve fileId from the route parameters
+  const fileId = req.params.fileId;
+
+  // Define the directory where your files are stored
+  // For example, let's say your files are in a 'public/files' folder
+  const fileDirectory = path.join(__dirname, 'uploads');
+
+  // The file path should be retrieved from your database, based on the fileId
+  // For this example, let's assume that fileId is the actual file name
+  const filePath = path.join(fileDirectory, fileId);
+
+  // Check if file exists
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      // Handle file not found or no access
+      console.error('File does not exist:', err);
+      return res.status(404).send('File not found');
+    }
+
+    // Set the headers to prompt download with the original file name
+    res.setHeader('Content-Disposition', 'attachment; filename=' + path.basename(filePath));
+    res.setHeader('Content-Transfer-Encoding', 'binary');
+    res.setHeader('Content-Type', 'application/octet-stream');
+
+    // Stream the file to the client
+    fs.createReadStream(filePath).pipe(res);
+  });
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function() {
