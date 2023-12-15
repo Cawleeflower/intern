@@ -24,7 +24,7 @@ app.use(express.json());
 
 // Middleware for setting Content Security Policy
 app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy", "default-src 'self'; font-src 'self' data:; ...other-directives...");
+  res.setHeader("Content-Security-Policy", "default-src 'self'; font-src 'self' data:;");
   next();
 });
 
