@@ -187,10 +187,6 @@ app.get('/files/download/:fileId', (req, res) => {
       return res.status(404).send('File not found');
     }
 
-    // Set the headers to prompt download with the original file name
-    res.setHeader('Content-Disposition', 'attachment; filename=' + path.basename(filePath));
-    res.setHeader('Content-Transfer-Encoding', 'binary');
-    res.setHeader('Content-Type', 'application/octet-stream');
 
     // Stream the file to the client
     fs.createReadStream(filePath).pipe(res);
