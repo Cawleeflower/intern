@@ -6,8 +6,24 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://intern-web-b420a534061a.herokuapp.com'
+];
+
 app.use(cors({
-  origin: 'https://intern-web-b420a534061a.herokuapp.com'
+  origin: (origin, callback) => {
+    // allow requests with no origin (like mobile apps, curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not ' +
+                'allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
 }));
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
